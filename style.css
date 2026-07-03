@@ -1346,6 +1346,131 @@ body::after {
   }
 }
 
+/* Realistic night sky: star field, moon, shooting stars (injected by script.js) */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.4px;
+  height: 1.4px;
+  border-radius: 50%;
+  background: transparent;
+  animation: twinkle 3.4s ease-in-out infinite alternate;
+}
+
+.stars-md {
+  width: 2px;
+  height: 2px;
+  animation-duration: 4.8s;
+  animation-delay: 0.9s;
+}
+
+.stars-lg {
+  width: 2.6px;
+  height: 2.6px;
+  animation-duration: 6s;
+  animation-delay: 1.7s;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.moon {
+  position: absolute;
+  top: 9%;
+  right: 11%;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, #fefeff 0%, #eaeeff 46%, #c3cbef 100%);
+  box-shadow:
+    0 0 42px rgba(228, 234, 255, 0.5),
+    0 0 130px rgba(178, 190, 255, 0.28);
+  opacity: 0.92;
+  animation: moon-drift 70s ease-in-out infinite alternate;
+}
+
+/* Faint craters for realism */
+.moon::before {
+  content: "";
+  position: absolute;
+  top: 24%;
+  left: 28%;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: rgba(158, 168, 208, 0.38);
+  box-shadow:
+    24px 17px 0 -4px rgba(158, 168, 208, 0.32),
+    9px 35px 0 -6px rgba(158, 168, 208, 0.3),
+    34px 38px 0 -7px rgba(158, 168, 208, 0.26);
+}
+
+@keyframes moon-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-26px, 14px, 0);
+  }
+}
+
+.shooting-star {
+  position: absolute;
+  top: 12%;
+  left: 4%;
+  width: 130px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(165, 243, 252, 0.4), transparent);
+  transform: rotate(28deg);
+  opacity: 0;
+  animation: shoot 9s ease-in 2.5s infinite;
+}
+
+.shooting-star.star-2 {
+  top: 5%;
+  left: 46%;
+  width: 100px;
+  animation-duration: 12.5s;
+  animation-delay: 7.2s;
+}
+
+@keyframes shoot {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(28deg);
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.95;
+  }
+  11% {
+    opacity: 0;
+  }
+  13% {
+    transform: translate3d(56vw, 30vw, 0) rotate(28deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(56vw, 30vw, 0) rotate(28deg);
+    opacity: 0;
+  }
+}
+
 /* Gradient glides across the big headings + shining glow pulse */
 .hero h1,
 .page-head h1 {
@@ -1537,6 +1662,8 @@ body::after {
   .hero::after,
   body::before,
   body::after,
+  .stars,
+  .moon,
   .hero h1,
   .page-head h1,
   .hero-photo img,
@@ -1560,6 +1687,10 @@ body::after {
   .nav-toggle-bar,
   .logo-mark {
     transition: none;
+  }
+
+  .shooting-star {
+    display: none;
   }
 }
 

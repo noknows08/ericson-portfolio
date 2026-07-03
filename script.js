@@ -4,6 +4,34 @@
 (function () {
   "use strict";
 
+  /* ---------- Realistic night sky (stars, moon, shooting stars) ---------- */
+  function starShadows(count, minAlpha) {
+    var shadows = [];
+    for (var i = 0; i < count; i++) {
+      var x = (Math.random() * 100).toFixed(2);
+      var y = (Math.random() * 100).toFixed(2);
+      var a = (minAlpha + Math.random() * 0.5).toFixed(2);
+      shadows.push(x + "vw " + y + "vh 0 rgba(255,255,255," + a + ")");
+    }
+    return shadows.join(",");
+  }
+
+  var sky = document.createElement("div");
+  sky.className = "sky";
+  sky.setAttribute("aria-hidden", "true");
+  sky.innerHTML =
+    '<div class="stars stars-sm"></div>' +
+    '<div class="stars stars-md"></div>' +
+    '<div class="stars stars-lg"></div>' +
+    '<div class="moon"></div>' +
+    '<div class="shooting-star"></div>' +
+    '<div class="shooting-star star-2"></div>';
+  document.body.prepend(sky);
+
+  sky.querySelector(".stars-sm").style.boxShadow = starShadows(95, 0.25);
+  sky.querySelector(".stars-md").style.boxShadow = starShadows(45, 0.35);
+  sky.querySelector(".stars-lg").style.boxShadow = starShadows(16, 0.5);
+
   /* ---------- Mobile nav toggle ---------- */
   var toggle = document.querySelector(".nav-toggle");
   var menu = document.querySelector(".nav-links");
