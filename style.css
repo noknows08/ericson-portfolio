@@ -433,6 +433,13 @@ button {
   opacity: 0.55;
 }
 
+/* Animatable angle for the rotating photo ring */
+@property --ring {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .hero-photo img {
   position: relative;
   display: block;
@@ -442,7 +449,7 @@ button {
   border: 3px solid transparent;
   background:
     linear-gradient(var(--card), var(--card)) padding-box,
-    var(--grad) border-box;
+    conic-gradient(from var(--ring), #22d3ee, #818cf8, #e879f9, #fbbf24, #22d3ee) border-box;
   box-shadow: 0 24px 60px rgba(5, 8, 22, 0.6);
 }
 
@@ -1308,11 +1315,43 @@ body::before {
   }
 }
 
-/* Gradient glides across the big headings */
+/* Ocean waves rolling along the bottom of every page — three layers,
+   different speeds and hues, like a neon shoreline at night */
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 210px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.75;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 200' preserveAspectRatio='none'%3E%3Cpath fill='%2322d3ee' fill-opacity='0.10' d='M0,100 C400,180 400,20 800,100 C1200,180 1200,20 1600,100 L1600,200 L0,200 Z'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 160' preserveAspectRatio='none'%3E%3Cpath fill='%23818cf8' fill-opacity='0.12' d='M0,80 C250,150 250,10 500,80 C750,150 750,10 1000,80 L1000,160 L0,160 Z'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1100 130' preserveAspectRatio='none'%3E%3Cpath fill='%23e879f9' fill-opacity='0.09' d='M0,65 C275,120 275,10 550,65 C825,120 825,10 1100,65 L1100,130 L0,130 Z'/%3E%3C/svg%3E");
+  background-repeat: repeat-x, repeat-x, repeat-x;
+  background-size: 1600px 190px, 1000px 150px, 1100px 115px;
+  background-position: 0 bottom, 0 bottom, 0 bottom;
+  animation: waves 24s linear infinite;
+}
+
+@keyframes waves {
+  from {
+    background-position: 0 bottom, 0 bottom, 0 bottom;
+  }
+  to {
+    background-position: -1600px bottom, -2000px bottom, -1100px bottom;
+  }
+}
+
+/* Gradient glides across the big headings + shining glow pulse */
 .hero h1,
 .page-head h1 {
   background-size: 220% auto;
-  animation: gradient-slide 8s ease-in-out infinite alternate;
+  animation: gradient-slide 6.5s ease-in-out infinite alternate,
+    glow-pulse 3.2s ease-in-out infinite alternate;
 }
 
 @keyframes gradient-slide {
@@ -1324,9 +1363,43 @@ body::before {
   }
 }
 
-/* Portrait gently floats; its halo breathes */
+@keyframes glow-pulse {
+  from {
+    filter: drop-shadow(0 0 10px rgba(165, 243, 252, 0.16));
+  }
+  to {
+    filter: drop-shadow(0 0 26px rgba(196, 181, 253, 0.5));
+  }
+}
+
+/* Kicker pill: shimmer sweeps across */
+.kicker {
+  position: relative;
+  overflow: hidden;
+}
+
+.kicker::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: skewX(-20deg);
+  animation: shine 4.2s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+/* Portrait gently floats inside its shining, rotating ring; halo breathes */
 .hero-photo img {
-  animation: bob 6.5s ease-in-out infinite alternate;
+  animation: bob 6.5s ease-in-out infinite alternate, ring-spin 5.5s linear infinite;
+}
+
+@keyframes ring-spin {
+  to {
+    --ring: 360deg;
+  }
 }
 
 @keyframes bob {
@@ -1463,11 +1536,13 @@ body::before {
   .hero::before,
   .hero::after,
   body::before,
+  body::after,
   .hero h1,
   .page-head h1,
   .hero-photo img,
   .hero-photo::before,
   .kicker::before,
+  .kicker::after,
   .btn::after,
   .reveal.visible .card,
   .reveal.visible .stat,
@@ -1581,6 +1656,11 @@ body::before {
 @media (max-width: 480px) {
   .container {
     padding: 0 18px;
+  }
+
+  body::after {
+    height: 130px;
+    background-size: 1000px 120px, 700px 95px, 750px 75px;
   }
 
   .nav {
