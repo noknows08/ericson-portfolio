@@ -260,6 +260,69 @@ button {
   gap: 14px;
 }
 
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  align-items: center;
+  gap: 56px;
+}
+
+.hero-photo {
+  position: relative;
+  justify-self: end;
+}
+
+.hero-photo::before {
+  content: "";
+  position: absolute;
+  inset: 18px -16px -16px 18px;
+  border: 1px solid var(--accent-strong);
+  border-radius: 24px;
+  opacity: 0.55;
+}
+
+.hero-photo img {
+  position: relative;
+  display: block;
+  width: min(320px, 100%);
+  height: auto;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* Company logo chip in the experience timeline */
+.timeline-company-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 0 4px;
+}
+
+.timeline-logo {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  padding: 4px;
+  background: #f4f6f4;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  object-fit: contain;
+}
+
+.timeline-logo-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  color: var(--accent);
+  padding: 0;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+}
+
 /* Sub-page header (experience / skills / contact) */
 .page-head {
   padding: 80px 0 8px;
@@ -773,6 +836,25 @@ a.contact-value:hover {
 
   .hero {
     padding: 64px 0 48px;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .hero-photo {
+    order: -1;
+    justify-self: start;
+  }
+
+  .hero-photo img {
+    width: min(230px, 62vw);
+  }
+
+  .hero-photo::before {
+    inset: 12px -11px -11px 12px;
+    border-radius: 20px;
   }
 
   .page-head {
