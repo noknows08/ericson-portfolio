@@ -1697,6 +1697,14 @@ body::after {
   }
 }
 
+/* 3D soldier canvas (home page, injected by soldier3d.js) */
+.soldier3d {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
 /* Cinematic edge vignette for the gritty look */
 .vignette {
   position: absolute;
