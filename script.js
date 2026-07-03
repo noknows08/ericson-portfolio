@@ -24,8 +24,16 @@
     '<div class="stars stars-md"></div>' +
     '<div class="stars stars-lg"></div>' +
     '<div class="moon"></div>' +
-    '<div class="shooting-star"></div>' +
-    '<div class="shooting-star star-2"></div>';
+    '<div class="smoke"></div>' +
+    '<div class="smoke smoke-2"></div>' +
+    '<div class="flash"></div>' +
+    '<div class="flash f2"></div>' +
+    '<div class="flash f3"></div>' +
+    '<div class="tracer t1"></div>' +
+    '<div class="tracer t2"></div>' +
+    '<div class="tracer t3"></div>' +
+    '<div class="tracer t4"></div>' +
+    '<div class="heli"></div>';
   document.body.prepend(sky);
 
   sky.querySelector(".stars-sm").style.boxShadow = starShadows(95, 0.25);
