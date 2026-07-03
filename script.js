@@ -59,6 +59,7 @@
     '<div class="embers"></div>' +
     '<div class="embers e2"></div>' +
     '<div class="squad"></div>' +
+    '<div class="vignette"></div>' +
     '<div class="grain"></div>';
   document.body.prepend(front);
 
