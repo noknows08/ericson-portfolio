@@ -1275,6 +1275,180 @@ a.contact-value:hover {
   transform: none;
 }
 
+/* ---------- Living motion ---------- */
+/* Slow aurora drifting behind every page */
+body {
+  position: relative;
+  z-index: 0;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -30% -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(560px 420px at 22% 30%, rgba(129, 140, 248, 0.17), transparent 60%),
+    radial-gradient(520px 420px at 78% 58%, rgba(34, 211, 238, 0.13), transparent 62%),
+    radial-gradient(620px 480px at 55% 88%, rgba(232, 121, 249, 0.12), transparent 60%);
+  filter: blur(38px);
+  animation: aurora-drift 26s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translate3d(-3%, -2%, 0) rotate(-1.5deg) scale(1);
+  }
+  50% {
+    transform: translate3d(2.5%, 2%, 0) rotate(1deg) scale(1.06);
+  }
+  100% {
+    transform: translate3d(-1.5%, 3%, 0) rotate(-0.5deg) scale(1.02);
+  }
+}
+
+/* Gradient glides across the big headings */
+.hero h1,
+.page-head h1 {
+  background-size: 220% auto;
+  animation: gradient-slide 8s ease-in-out infinite alternate;
+}
+
+@keyframes gradient-slide {
+  from {
+    background-position: 0% center;
+  }
+  to {
+    background-position: 100% center;
+  }
+}
+
+/* Portrait gently floats; its halo breathes */
+.hero-photo img {
+  animation: bob 6.5s ease-in-out infinite alternate;
+}
+
+@keyframes bob {
+  from {
+    transform: translateY(-6px);
+  }
+  to {
+    transform: translateY(9px);
+  }
+}
+
+.hero-photo::before {
+  animation: halo 6.5s ease-in-out infinite alternate;
+}
+
+@keyframes halo {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 0.72;
+  }
+}
+
+/* Kicker dot pulse */
+.kicker::before {
+  animation: pulse-dot 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.55;
+  }
+}
+
+/* Periodic shine sweep across primary buttons */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -70%;
+  width: 45%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: skewX(-20deg);
+  animation: shine 4.6s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -70%;
+  }
+  55% {
+    left: 130%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+/* Staggered entrance for grid children once their section reveals */
+.reveal.visible .card,
+.reveal.visible .stat,
+.reveal.visible .skill-card,
+.reveal.visible .cert-card,
+.reveal.visible .contact-card {
+  animation: rise-in 0.55s ease backwards;
+}
+
+.reveal.visible .card:nth-child(2),
+.reveal.visible .stat:nth-child(2),
+.reveal.visible .skill-card:nth-child(2),
+.reveal.visible .cert-card:nth-child(2),
+.reveal.visible .contact-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.reveal.visible .card:nth-child(3),
+.reveal.visible .stat:nth-child(3),
+.reveal.visible .skill-card:nth-child(3),
+.reveal.visible .cert-card:nth-child(3),
+.reveal.visible .contact-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.reveal.visible .skill-card:nth-child(4),
+.reveal.visible .cert-card:nth-child(4),
+.reveal.visible .contact-card:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.reveal.visible .skill-card:nth-child(5),
+.reveal.visible .cert-card:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+.reveal.visible .skill-card:nth-child(6) {
+  animation-delay: 0.5s;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1287,7 +1461,19 @@ a.contact-value:hover {
   }
 
   .hero::before,
-  .hero::after {
+  .hero::after,
+  body::before,
+  .hero h1,
+  .page-head h1,
+  .hero-photo img,
+  .hero-photo::before,
+  .kicker::before,
+  .btn::after,
+  .reveal.visible .card,
+  .reveal.visible .stat,
+  .reveal.visible .skill-card,
+  .reveal.visible .cert-card,
+  .reveal.visible .contact-card {
     animation: none;
   }
 

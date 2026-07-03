@@ -1,5 +1,5 @@
 /* Ericson Sombrea — Portfolio
-   Shared behavior: mobile nav toggle + scroll-reveal. */
+   Shared behavior: mobile nav toggle + scroll-reveal + stat count-up. */
 
 (function () {
   "use strict";
@@ -52,4 +52,49 @@
   revealEls.forEach(function (el) {
     observer.observe(el);
   });
+
+  /* ---------- Stat count-up ---------- */
+  var statEls = document.querySelectorAll(".stat-number");
+
+  function countUp(el) {
+    var raw = el.textContent.trim();
+    var match = raw.match(/^(\d+)(.*)$/);
+    if (!match) return;
+    var target = parseInt(match[1], 10);
+    var suffix = match[2] || "";
+    var duration = 1200;
+    var start = null;
+
+    function step(ts) {
+      if (start === null) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      el.textContent = Math.round(eased * target) + suffix;
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        el.textContent = raw;
+      }
+    }
+
+    window.requestAnimationFrame(step);
+  }
+
+  if (statEls.length) {
+    var statObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            countUp(entry.target);
+            statObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    statEls.forEach(function (el) {
+      statObserver.observe(el);
+    });
+  }
 })();
