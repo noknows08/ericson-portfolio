@@ -36,6 +36,35 @@
     '<div class="heli"></div>';
   document.body.prepend(sky);
 
+  /* Foreground war layer: fog, rising embers, patrolling squad, film grain */
+  function emberShadows(count) {
+    var shadows = [];
+    for (var i = 0; i < count; i++) {
+      var x = (Math.random() * 100).toFixed(2);
+      var y = (Math.random() * 30).toFixed(2);
+      var warm = Math.random() < 0.7;
+      var color = warm ? "rgba(251,191,36," : "rgba(248,113,113,";
+      var a = (0.35 + Math.random() * 0.45).toFixed(2);
+      shadows.push(x + "vw " + y + "vh 0 " + (Math.random() < 0.3 ? "1px " : "0 ") + color + a + ")");
+    }
+    return shadows.join(",");
+  }
+
+  var front = document.createElement("div");
+  front.className = "warfront";
+  front.setAttribute("aria-hidden", "true");
+  front.innerHTML =
+    '<div class="fog"></div>' +
+    '<div class="fog fog-2"></div>' +
+    '<div class="embers"></div>' +
+    '<div class="embers e2"></div>' +
+    '<div class="squad"></div>' +
+    '<div class="grain"></div>';
+  document.body.prepend(front);
+
+  front.querySelector(".embers").style.boxShadow = emberShadows(14);
+  front.querySelector(".embers.e2").style.boxShadow = emberShadows(11);
+
   sky.querySelector(".stars-sm").style.boxShadow = starShadows(95, 0.25);
   sky.querySelector(".stars-md").style.boxShadow = starShadows(45, 0.35);
   sky.querySelector(".stars-lg").style.boxShadow = starShadows(16, 0.5);
